@@ -191,7 +191,7 @@ export default function Auth() {
                     <OauthBtnContainer>
                         <OauthText>Or signin with</OauthText>
                         <GoogleLogin
-                            clientId="342033078170-7il76dtupbjd9ej9688484m7gggs2m48.apps.googleusercontent.com"
+                            clientId="YOUR_CLIENT_ID"
                             render={(renderProps) => (
                                 <GoogleBtn onClick={renderProps.onClick}><FcGoogle /></GoogleBtn>
                             )}
