@@ -1,41 +1,5 @@
 import { gql } from '@apollo/client'
 
-//Auth
-export const SIGNIN = gql`
-    mutation Signin($credentials: String, $password: String) {
-        signin(credentials: $credentials, password: $password) {
-            accessToken
-            refreshToken
-        }
-    }
-`
-
-export const SIGNUP = gql`
-    mutation Signup($email: String, $password: String, $username: String) {
-        signup(email: $email, password: $password, username: $username) {
-            accessToken
-            refreshToken        
-        }
-    }
-`
-
-export const GOOGLE_SINGIN = gql`
-    mutation GoogleSignin($tokenId: String) {
-        googleSignin(tokenId: $tokenId) {
-            accessToken
-            refreshToken        
-        }
-    }
-`
-
-export const SIGNOUT = gql`
-    mutation Signout($refreshToken: String) {
-        signout(refreshToken: $refreshToken) {
-            refreshToken
-        }
-    }
-`
-
 //User
 export const UPDATE_USER_PROFILE = gql`
     mutation UpdateProfile($name: String, $bio: String, $banner: Upload, $imageUrl: Upload, $id: String) {
@@ -51,47 +15,6 @@ export const UPDATE_USER_PROFILE = gql`
     }
 `
 
-export const UPDATE_USER_EMAIL = gql`
-    mutation UpdateEmail($currentPassword: String, $newEmail: String, $id: String) {
-        updateEmail(currentPassword: $currentPassword, newEmail: $newEmail, id: $id) {
-            id
-            username
-            name
-            bio
-            banner
-            imageUrl
-            email
-        }
-    }
-`
-
-export const UPDATE_USER_USERNAME= gql`
-    mutation UpdateUsername($currentPassword: String, $newUsername: String, $id: String) {
-        updateUsername(currentPassword: $currentPassword, newUsername: $newUsername, id: $id) {
-            id
-            username
-            name
-            bio
-            banner
-            imageUrl
-            email
-        }
-    }
-`
-
-export const UPDATE_USER_PASSWORD = gql`
-    mutation UpdatePassword($currentPassword: String, $newPassword: String, $id: String) {
-        updatePassword(currentPassword: $currentPassword, newPassword: $newPassword, id: $id) {
-            id
-            username
-            name
-            bio
-            banner
-            imageUrl
-            email
-        }
-    }
-`
 
 //Post
 export const CREATE_POST = gql`
