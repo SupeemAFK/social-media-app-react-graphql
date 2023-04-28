@@ -1,12 +1,10 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const fetch = require("node-fetch");
 const UserModel = require('../models/user');
 const crypto = require('crypto');
 const resetPasswordHtml = require('../email-templates/resetPassword')
 const verifyEmailHtml = require('../email-templates/verifyEmail')
 const sendmail = require('../utils/sendmail');
-const { uploadBlob } = require('../utils/uploadImage');
 const redisClient = require('redis').createClient();
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
@@ -51,13 +49,8 @@ async function oauthSignin(req, res) {
         return req.logIn(user, () => res.status(200).json({ message: "Successfully signin" }))
     }
 
-    //upload profilePic to google cloud storage
-    const blob = await fetch(picture).then(res => res.blob())
-    blob.filename = picture.split('/')[4]+'.jpg'
-    const imageUrl = await uploadBlob(blob)
-
     const username = name.length > 10 ? name.slice(0, 10).replace(/ /g,'') + '_' + Math.random().toString(36).substr(2, 9) : name.replace(/ /g,'') + '_' + Math.random().toString(36).substr(2, 9)
-    const newUser = await UserModel.create({ email: email, username: username, name: name, imageUrl: imageUrl })
+    const newUser = await UserModel.create({ email: email, username: username, name: name, imageUrl: picture })
 
     req.logIn(newUser, () => res.status(200).json({ message: "Successfully signup" }))
 }

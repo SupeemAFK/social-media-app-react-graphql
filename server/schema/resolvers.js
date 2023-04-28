@@ -1,11 +1,7 @@
 const PostsModel = require("../models/post");
 const UserModel = require("../models/user");
-const { GraphQLUpload } = require("graphql-upload");
-const { uploadImage } = require('../utils/uploadImage');
 
 const resolvers = {
-    Upload: GraphQLUpload,
-
     Query: {
         getPosts: async (parent, args, context) => {
             const posts = await PostsModel.find()
@@ -35,10 +31,7 @@ const resolvers = {
     Mutation: {
         //Post Mutation
         addPost: async (parent, args, context) => {
-            const imgFileArray = await Promise.all(args.img.map(async (img) => await img))
-            const imageUrlArray = await Promise.all(imgFileArray.map(async (imgFile) => await uploadImage(imgFile)))
-
-            const newPost = new PostsModel({...args, img: imageUrlArray, userId: context.user.id})
+            const newPost = new PostsModel({...args, img: args.img, userId: context.user.id})
             await newPost.save()
             return newPost
         },
@@ -49,10 +42,7 @@ const resolvers = {
         },
 
         editPost: async (parent, args) => {
-            const imgFileArray = await Promise.all(args.img.map(async (img) => await img))
-            const imageUrlArray = await Promise.all(imgFileArray.map(async (imgFile) => await uploadImage(imgFile)))
-
-            const updatedPost = await PostsModel.findByIdAndUpdate(args.id, {message: args.message, img: imageUrlArray}, { new: true})
+            const updatedPost = await PostsModel.findByIdAndUpdate(args.id, {message: args.message, img: args.img}, { new: true})
             return updatedPost
         },
 
@@ -72,11 +62,8 @@ const resolvers = {
 
         //Comment Mutation
         addComment: async (parent, args, context) => {
-            const commentImgFile = await args.commentImg
-            const imageUrl = commentImgFile ? await uploadImage(commentImgFile) : ""
-
             const post = await PostsModel.findById(args.id)
-            const comment = {commentMessage: args.commentMessage, commentImg: imageUrl, userId: context.user.id}
+            const comment = {commentMessage: args.commentMessage, commentImg: args.commentImg, userId: context.user.id}
             post.comments.push(comment)
 
             const updatedPost = await PostsModel.findByIdAndUpdate(args.id, post, { new: true })
@@ -92,11 +79,8 @@ const resolvers = {
         },
 
         editComment: async (parent, args) => {
-            const commentImgFile = await args.commentImg
-            const imageUrl = commentImgFile ? await uploadImage(commentImgFile) : ""
-
             const post = await PostsModel.findById(args.id)
-            const updateComment = {commentMessage: args.commentMessage, commentImg: imageUrl}
+            const updateComment = {commentMessage: args.commentMessage, commentImg: args.commentImg}
             post.comments = post.comments.map(comment => String(comment._id) === String(args.commentId) ? {...comment.toObject(), ...updateComment} : comment)
 
             const updatedPost = await PostsModel.findByIdAndUpdate(args.id, post, { new: true })
@@ -105,13 +89,7 @@ const resolvers = {
 
         //User Mutation
         updateProfile: async (parent, args) => {
-            const profilePicFile = await args.imageUrl
-            const bannerFile = await args.banner
-
-            const profilePicImageUrl = await uploadImage(profilePicFile)
-            const bannerImageUrl = await uploadImage(bannerFile)
-
-            const updatedUser = await UserModel.findByIdAndUpdate(args.id, {...args, imageUrl: profilePicImageUrl, banner: bannerImageUrl}, { new: true })
+            const updatedUser = await UserModel.findByIdAndUpdate(args.id, {...args, imageUrl: args.imageUrl, banner: args.banner}, { new: true })
             return updatedUser            
         },
     },

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import useUploadImg from '../../../../hooks/useUploadImg'
+import dataURLtoFile from '../../../../utils/dataURLtoFile'
 import ImageUploading from 'react-images-uploading';
-import { urlToFile } from '../../../../utils/imgPathToFile';
 import { toast } from 'react-toastify'
 
 //styles and icons
@@ -37,6 +38,7 @@ import ProfilePicEditor from '../../../ProfilePicEditor/ProfilePicEditor';
 import BannerEditor from '../../../BannerEditor/BannerEditor';
 
 export default function EditProfileForm({ user, setIsOpenEditProfileForm }) {
+    const { uploadImg, isUploading } = useUploadImg()
     const [updateProfile, { loading: updateProfileLoading }] = useMutation(UPDATE_USER_PROFILE, {
         onError: (updateProfileError) => {
             console.error(updateProfileError)
@@ -60,9 +62,10 @@ export default function EditProfileForm({ user, setIsOpenEditProfileForm }) {
 
     useEffect(async () => {
         setUserProfileForm({...userProfileForm, ...user, imageUrl: { data_url: user.imageUrl, file: "" }, banner: { data_url: user.banner, file: "" }})
-
-        const imgFile = await urlToFile(user.imageUrl)
-        const bannerFile = await urlToFile(user.banner)
+        const imgBase64 = await toDataURL(user.imageUrl)
+        const bannerBase64 = await toDataURL(user.banner) 
+        const imgFile = dataURLtoFile(imgBase64, getName(user.imageUrl))
+        const bannerFile = dataURLtoFile(bannerBase64, getName(user.banner))
 
         const imgObj = { data_url: user.imageUrl, file: imgFile }
         const bannerObj = { data_url: user.banner, file: bannerFile }
@@ -77,14 +80,23 @@ export default function EditProfileForm({ user, setIsOpenEditProfileForm }) {
         return () => clearTimeout(timeout)
     }, [alert])
 
-    function handleOnSubmit(e) {
+    async function handleOnSubmit(e) {
         e.preventDefault()
+        let imgUrl = user.imageUrl
+        let bannerUrl = user.banner
+
+        if (userProfileForm.imageUrl.data_url != user.imageUrl) {
+            imgUrl = await uploadImg(userProfileForm.imageUrl.file)
+        }
+        if (userProfileForm.banner.data_url != user.banner) {
+            bannerUrl = await uploadImg(userProfileForm.banner.file)
+        }
 
         updateProfile({
             variables: {
                 name: userProfileForm.name,
-                imageUrl: userProfileForm.imageUrl.file,
-                banner: userProfileForm.banner.file,
+                imageUrl: imgUrl,
+                banner: bannerUrl,
                 bio: userProfileForm.bio,
                 id: userProfileForm.id,
             }
@@ -99,8 +111,10 @@ export default function EditProfileForm({ user, setIsOpenEditProfileForm }) {
     }
 
     async function removeBanner() {
-        const bannerUrl = "https://storage.googleapis.com/social-app-files/banner-placerholder.png"
-        const bannerFile = await urlToFile(bannerUrl)
+        const bannerUrl = "https://res.cloudinary.com/dkmwuwsvw/image/upload/v1656342994/img-files/depositphotos_137014128-stock-illustration-user-profile-icon_pqovr7.jpg"
+        const bannerBase64 = await toDataURL(bannerUrl) 
+        const bannerFile = dataURLtoFile(bannerBase64, "depositphotos_137014128-stock-illustration-user-profile-icon_pqovr7.jpg")
+
         const bannerObj = { data_url: bannerUrl, file: bannerFile }
         setUserProfileForm({...userProfileForm, banner: bannerObj})
     }
@@ -197,3 +211,17 @@ export default function EditProfileForm({ user, setIsOpenEditProfileForm }) {
         </>
     )
 }
+
+const toDataURL = url => fetch(url)
+      .then(response => response.blob())
+      .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+}))
+
+function getName(url) {
+    const arr = url.split('/')
+    return arr[8]
+}     

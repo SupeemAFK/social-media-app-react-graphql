@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { CreatePostFormContext } from '../../../../../pages/_app'
-import { urlToFile } from '../../../../../utils/imgPathToFile'
+import dataURLtoFile from '../../../../../utils/dataURLtoFile'
+
 //auth
 import { useSessionUser } from '../../../../../auth/getSessionUser'
 
@@ -27,12 +28,15 @@ export default function Menu({ post, id, anchorEl, setAnchorEl, open }) {
     async function setEditPostForm() {
         setAnchorEl(null)
 
-        if (post.img === "") {
+        if (!post.img) {
             setCreatePostForm({...createPostForm, ...post, isOpenForm: true})
             return
         }
-        const imgFileArray = await Promise.all(post.img.map(async (imageUrl) => await urlToFile(imageUrl)))
+        const imgName = post.img.map(imgUrl => getName(imgUrl))
+        const imgBase64Array = await Promise.all(post.img.map((imageUrl) => toDataURL(imageUrl)))
+        const imgFileArray = imgBase64Array.map((imgBase64, i) => dataURLtoFile(imgBase64, imgName[i]))
         const imgObjArray = imgFileArray.map((imgFile, i) => ({ data_url: post.img[i], file: imgFile}))
+
         setCreatePostForm({...createPostForm, ...post, img: imgObjArray, isOpenForm: true})
     }
 
@@ -80,4 +84,18 @@ export default function Menu({ post, id, anchorEl, setAnchorEl, open }) {
             </StyledMenuItem>
         </StyledMenu>
     )
+}
+
+const toDataURL = url => fetch(url)
+      .then(response => response.blob())
+      .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+     }))
+
+function getName(url) {
+    const arr = url.split('/')
+    return arr[8]
 }

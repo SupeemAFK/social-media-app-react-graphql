@@ -24,11 +24,11 @@ const userSchema = mongoose.Schema({
     },
     imageUrl: {
         type: String,
-        default: "https://storage.googleapis.com/social-app-files/profilepic-placeholder.png"
+        default: "https://res.cloudinary.com/dkmwuwsvw/image/upload/v1656342985/img-files/Profile_avatar_placeholder_large_muptjk.png"
     },
     banner: {
         type: String,
-        default: "https://storage.googleapis.com/social-app-files/banner-placerholder.png"
+        default: "https://res.cloudinary.com/dkmwuwsvw/image/upload/v1656342994/img-files/depositphotos_137014128-stock-illustration-user-profile-icon_pqovr7.jpg"
     },
     isVerified: {
         type: Boolean,

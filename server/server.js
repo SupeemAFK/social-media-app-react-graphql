@@ -11,7 +11,6 @@ const passport = require('passport');
 const { typeDefs } = require('./schema/typeDefs');
 const { resolvers } = require('./schema/resolvers');
 const { ApolloServer } = require('apollo-server-express')
-const { graphqlUploadExpress } = require("graphql-upload");
 require('./config/passport');
 require('dotenv').config()
 
@@ -39,7 +38,6 @@ async function run() {
     app.use(csrfProtection) //csrf prevention
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(graphqlUploadExpress());
     app.use(passport.initialize());
     app.use(passport.session());
     app.get('/csrf-token', (req, res) => res.status(200).json({ csrfToken: req.csrfToken() })) //get csrf-token

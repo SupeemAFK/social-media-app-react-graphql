@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import AuthProvider from '../auth/AuthProvider'
 import { ToastContainer } from 'react-toastify';
 import { darkTheme, lightTheme } from '../styles/theme'
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AuthProvider>
+    <GoogleOAuthProvider clientId='799722527574-sj9804dqremj08uko8ems04jas7fidur.apps.googleusercontent.com'>
       <ApolloProvider client={apolloClient}>
         <CreatePostFormContext.Provider value={{ createPostForm, setCreatePostForm }}>
           <ThemeContext.Provider value={{ isOpenDarkTheme, setIsOpenDarkTheme }}>
@@ -34,6 +36,7 @@ function MyApp({ Component, pageProps }) {
           </ThemeContext.Provider>
         </CreatePostFormContext.Provider>
       </ApolloProvider>
+      </GoogleOAuthProvider>
     </AuthProvider>
   ) 
 }

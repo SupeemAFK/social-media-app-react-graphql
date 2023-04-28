@@ -48,7 +48,7 @@ export default function ShowPhoto() {
     })
 
     useEffect(() => {
-        post?.img ? getAverageColor(post?.img[photoIndex]).then(color => setColorRGBA(color?.rgba)) : setColorRGBA(null)
+        post?.img ? getAverageColor(getName(post?.img[photoIndex])).then(color => setColorRGBA(color?.rgba)) : setColorRGBA(null)
     }, [post])
 
     return (
@@ -68,7 +68,7 @@ export default function ShowPhoto() {
                             >
                                 <a 
                                   style={{ textDecoration: "none", color: "inherit" }} 
-                                  href={`https://storage.googleapis.com/download/storage/v1/b/${post?.img[photoIndex]?.split('/')[3]}/o/${post?.img[photoIndex]?.split('/')[4]}?alt=media`} 
+                                  href={`https://res.cloudinary.com/dkmwuwsvw/image/upload/fl_attachment/v1656343741/img-files/${getName(post?.img[photoIndex])}`} 
                                   download
                                   onClick={() => toast.success("Image downloaded", {
                                         position: "bottom-center",
@@ -104,13 +104,10 @@ export default function ShowPhoto() {
 }
 
 //get average color
-function getAverageColor(imageURL) {
+function getAverageColor(imgName) {
     const fac = new FastAverageColor();
 
-    const bucketName = imageURL?.split('/')[3]
-    const fileName = imageURL?.split('/')[4]
-
-    const color = fac.getColorAsync(`https://storage.googleapis.com/storage/v1/b/${bucketName}/o/${fileName}?alt=media`, {
+    const color = fac.getColorAsync(`https://res.cloudinary.com/dkmwuwsvw/image/upload/v1656343741/img-files/${imgName}`, {
         ignoredColor: [255, 255, 255, 255] // white
     })
     .then(color => color)
@@ -120,3 +117,8 @@ function getAverageColor(imageURL) {
 
     return color
 }
+
+function getName(url) {
+    const arr = url.split('/')
+    return arr[8]
+} 

@@ -1,8 +1,6 @@
 const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
-    scalar Upload
-
     type Post {
         id: String,
         img: [String],
@@ -54,18 +52,18 @@ const typeDefs = gql`
     #Main Mutation
     type Mutation {
         #Post mutaion
-        addPost(img: [Upload], message: String): Post
+        addPost(img: [String], message: String): Post
         deletePost(id: String): Post 
-        editPost(img: [Upload], message: String, id: String): Post
+        editPost(img: [String], message: String, id: String): Post
         likePost(id: String): Post
 
         #Comment mutaion
-        addComment(commentImg: Upload, commentMessage: String, id: String): Post
+        addComment(commentImg: String, commentMessage: String, id: String): Post
         deleteComment(id: String, commentId: String): Post
-        editComment(commentImg: Upload, commentMessage: String, id: String, commentId: String): Post
+        editComment(commentImg: String, commentMessage: String, id: String, commentId: String): Post
 
         #User Mutation
-        updateProfile(name: String, bio: String, banner: Upload, imageUrl: Upload, id: String): User
+        updateProfile(name: String, bio: String, banner: String, imageUrl: String, id: String): User
     }
 `
 

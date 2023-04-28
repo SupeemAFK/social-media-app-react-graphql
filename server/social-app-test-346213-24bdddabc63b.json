@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "social-app-test-346213",
+  "private_key_id": "24bdddabc63b9990ee992f28e5f95dbc4c0d57bc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCU7TucQB33ZthW\nJ8BDa4z4oB1vfLnLj6WYka5SyAvtZnW1OGjSnD4XyVhf8PJ7n8BfVjet/+TDGfMp\nPwm8wQRCUVz08GNn5eDcnOPenY81AT63Asu1Wa3QLcShs0T7tj5gtnUN4iE/9Gs/\nHGj5kfwBWOvau0WatB2txddOPDUaDdFA/7fCM9brMZKs7E4Iz6JC1frR6Om0yyHm\n16qefzptml6h6SUg3Dhf0/oOpPffS4BZEdmPUs2k4H/qkc0s4XVwHZMNuhUe32Df\nDTVa+Ta4qhSy3xtR9cUSEIAFh+Qdbjih8JG+MciDXyI32Hhm1Ui/G7ZzxbwatNnv\nzAZ096ujAgMBAAECggEAH3AG3eCREtlEgMdqaDELdK6EGDVJmUWNDOxv0qzFC8vN\nvEAYrKDr4KSRwcsAvQUHnHh8T4BNv7u6H3JdsVlDd2Zqi5A1Q8j8k0WROryi7usA\n3Kw76V/xd5k5wXKw9LvPZiYOBqy+HRyRCSULqeddvcESJL3Unyg3fafeX/cItKN0\nmSXoGJTcoY8aelKcUluf4a7Rgit8iniYDc8CGDVLOXkfbNt71G5OFjdVtRth/VAr\nmTNeRkw378CU4tYT5sIkQa4XcsDZoev0Bff4x3ddIy3BcsFRSZQz4lNpN5cVXaA3\nd6puDYx27bhJ0z7YEwKbeuTUNZhk36gUSjYzOKxF6QKBgQDI2xCLj6UpPHiwiQb6\ns2+j24GOJ7biIS6tNjH8x1ysSTSVnzyrYdVhzd+Wgmyz2sUiiZGfV2Euuv+kKJKV\ne8UyhbRb9lSZFTstSom4m00Cvci6qLRs21mPGz7kFepTXjxsRNF4FPCLOxDMiRGV\nCFbJ6EGC1VCNr8bNWOUzQWYk6wKBgQC90GPuaUtYlPpoMBtrr5qOU154BttLly4V\n4lu38JcGCXLcSICDxvZvAm97Ye93pDmE4Dhkv3ra0oQhR9TF7e8LowrGeeGDRvHy\n8gtl4znyAGWG2RtB2nEkcJwVjByGfdNzmZrv89Y1wcil+3Jv52ofSpxNY0mtitw2\nPNTUparGKQKBgHv3gRmyGcz+rrq+iBk5oGDwvOCBMIYW1tk/RtDuNwt6z0K9mlNo\nuat4xlP9wZusHdn4MHG5G5kc/2VRSU+LqaVKEoxj18j36qNEiwXujDRx8C8Mqvc4\n1ujVdxaNVCgKVJ66RtKnkeNNHEwxGTHziKVrfOuEPwiEAd6BzEy7Q5DrAoGALmg/\ntm9p63tpCYYRfi+N0xRQ+Xl7riyFKPaRxBP/aItw2KilOxKu948Z4ImeOZseMP18\n7CzghZWIlnZwb//vPOIc5U+xMh5rUyGYZc27Qg6Uw/ZasqwMk4MwthfudXdX9mBs\nwBPWoIgDXYlvfiqPCJ1+P3Fx9wsHMf+HbYIfkZkCgYEAkmoI+xbPPYdtD5LZ2H57\n00TsuYFQyG5xfB4eyGrBLjJwl7PuH9miAVx/7aHAUERsBXLc2nYF012/AsvWywTQ\nChBOJLdMEbvjsX7jcfaWq+z/ZKBHGW8w9O0BNrWNTzVo4HkpxKeX9ZSdDMi4xHI1\nagX/IR3gcRlYJtqNqTF2vSk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "bucket-access-user@social-app-test-346213.iam.gserviceaccount.com",
+  "client_id": "105667338630606208965",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bucket-access-user%40social-app-test-346213.iam.gserviceaccount.com"
+}
