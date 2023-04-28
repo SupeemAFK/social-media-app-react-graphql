@@ -1,1 +1,1 @@
-# New version is on newver branch
+# Deprecated🚫 New version is on newver branch
