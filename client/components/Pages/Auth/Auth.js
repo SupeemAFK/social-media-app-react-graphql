@@ -192,13 +192,6 @@ export default function Auth() {
                     <OauthBtnContainer>
                         <OauthText>Or signin with</OauthText>
                         <GoogleLogin
-<<<<<<< HEAD
-                            clientId="YOUR_CLIENT_ID"
-                            render={(renderProps) => (
-                                <GoogleBtn onClick={renderProps.onClick}><FcGoogle /></GoogleBtn>
-                            )}
-=======
->>>>>>> 804670e (fix bugs and everything)
                             onSuccess={googleSuccess}
                             onError={googleError}
                         />
