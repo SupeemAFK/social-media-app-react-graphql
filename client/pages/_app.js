@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AuthProvider>
-    <GoogleOAuthProvider clientId='799722527574-sj9804dqremj08uko8ems04jas7fidur.apps.googleusercontent.com'>
+    <GoogleOAuthProvider clientId='YOUR_CLIENT_ID'>
       <ApolloProvider client={apolloClient}>
         <CreatePostFormContext.Provider value={{ createPostForm, setCreatePostForm }}>
           <ThemeContext.Provider value={{ isOpenDarkTheme, setIsOpenDarkTheme }}>
