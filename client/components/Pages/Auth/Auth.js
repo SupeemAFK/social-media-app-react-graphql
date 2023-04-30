@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../../auth/AuthProvider'
 import { toast } from 'react-toastify';
 
@@ -126,14 +126,15 @@ export default function Auth() {
     }
  
     async function googleSuccess(res) {
-        const { data } = await googleSignin(res.tokenId)
+        const { data } = await googleSignin(res.credential)
         if (data?.is_two_factor_required) {
             return setFormMode("token")
         }
         return window.location.href = '/'
     }
 
-    function googleError() {
+    function googleError(res) {
+        console.log(res)
         console.log('Google Sign In was unsuccessful. Try again later')
     }
 
@@ -191,13 +192,8 @@ export default function Auth() {
                     <OauthBtnContainer>
                         <OauthText>Or signin with</OauthText>
                         <GoogleLogin
-                            clientId="YOUR_CLIENT_ID"
-                            render={(renderProps) => (
-                                <GoogleBtn onClick={renderProps.onClick}><FcGoogle /></GoogleBtn>
-                            )}
                             onSuccess={googleSuccess}
-                            onFailure={googleError}
-                            cookiePolicy="single_host_origin"
+                            onError={googleError}
                         />
                     </OauthBtnContainer>
                 )}

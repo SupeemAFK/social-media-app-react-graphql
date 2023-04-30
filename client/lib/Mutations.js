@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 //User
 export const UPDATE_USER_PROFILE = gql`
-    mutation UpdateProfile($name: String, $bio: String, $banner: Upload, $imageUrl: Upload, $id: String) {
+    mutation UpdateProfile($name: String, $bio: String, $banner: String, $imageUrl: String, $id: String) {
         updateProfile(name: $name, bio: $bio, banner: $banner, imageUrl: $imageUrl, id: $id) {
             id
             username
@@ -15,10 +15,13 @@ export const UPDATE_USER_PROFILE = gql`
     }
 `
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 804670e (fix bugs and everything)
 //Post
 export const CREATE_POST = gql`
-    mutation CreatePost($img: [Upload], $message: String) {
+    mutation CreatePost($img: [String], $message: String) {
         addPost(img: $img, message: $message) {
             id
             message
@@ -51,7 +54,7 @@ export const CREATE_POST = gql`
 ` 
 
 export const EDIT_POST = gql`
-    mutation EditPost($img: [Upload], $message: String, $id: String) {
+    mutation EditPost($img: [String], $message: String, $id: String) {
         editPost(img: $img, message: $message, id: $id) {
             id
             message
@@ -105,7 +108,7 @@ export const LIKE_POST = gql`
 `
 
 export const ADD_COMMENT = gql`
-    mutation AddComment($commentImg: Upload, $commentMessage: String, $id: String) {
+    mutation AddComment($commentImg: String, $commentMessage: String, $id: String) {
         addComment(commentImg: $commentImg, commentMessage: $commentMessage, id: $id) {
             id
             message
@@ -138,7 +141,7 @@ export const ADD_COMMENT = gql`
 `
 
 export const EDIT_COMMENT = gql`
-    mutation EditComment($commentImg: Upload, $commentMessage: String, $id: String, $commentId: String) {
+    mutation EditComment($commentImg: String, $commentMessage: String, $id: String, $commentId: String) {
         editComment(commentImg: $commentImg, commentMessage: $commentMessage, id: $id, commentId: $commentId) {
             id
             message

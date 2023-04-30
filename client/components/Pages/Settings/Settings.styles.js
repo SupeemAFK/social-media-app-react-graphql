@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const SettingsPage = styled.div`
-    height: calc(100vh - 48px);
+    min-height: calc(100vh - 48px);
 
     display: flex;
     justify-content: center;

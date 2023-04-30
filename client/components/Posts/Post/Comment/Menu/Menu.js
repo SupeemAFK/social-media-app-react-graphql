@@ -1,5 +1,5 @@
 import React from 'react'
-import { urlToFile } from '../../../../../utils/imgPathToFile'
+import dataURLtoFile from '../../../../../utils/dataURLtoFile'
 
 //styles and icons
 import { StyledMenu, StyledMenuItem } from '../../../../../styles/GlobalStyles'
@@ -19,14 +19,15 @@ export default function Menu({ comment, commentForm, setCommentForm, id, anchorE
 
     async function setEditCommentForm() {
         setAnchorEl(null)
-
-        if (comment.commentImg === "") {
-            setCommentForm({...commentForm, ...comment})
+        if (!comment.commentImg ) {
+            setCommentForm({...commentForm, ...comment, commentImg: "" })
             return
         }
-        const imgFile = await urlToFile(comment.commentImg)
+
+        const imgBase64 = await toDataURL(comment.commentImg)
+        const imgFile = await dataURLtoFile(imgBase64, getName(comment.commentImg))
         const imgObj = { data_url: comment.commentImg, file: imgFile}
-        setCommentForm({...commentForm, ...comment, commentImg: imgObj})
+        setCommentForm({...commentForm, ...comment, commentImg: imgObj })
     }
 
     function handleDeleteComment() {
@@ -58,4 +59,18 @@ export default function Menu({ comment, commentForm, setCommentForm, id, anchorE
             <StyledMenuItem type="button" onClick={handleDeleteComment} ><AiFillDelete  style={{ marginRight: "0.2rem" }}/> Delete</StyledMenuItem>
         </StyledMenu>
     )
+}
+
+const toDataURL = url => fetch(url)
+      .then(response => response.blob())
+      .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+     }))
+
+function getName(url) {
+    const arr = url.split('/')
+    return arr[8]
 }

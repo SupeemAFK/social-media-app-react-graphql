@@ -11,7 +11,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@google-cloud/storage": "^5.18.0",
     "@sendgrid/mail": "^7.6.0",
     "apollo-server-express": "^3.6.2",
     "bcrypt": "^5.0.1",
@@ -22,9 +21,9 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "form-data": "^4.0.0",
     "google-auth-library": "^7.11.0",
     "graphql": "^16.2.0",
-    "graphql-upload": "^13.0.0",
     "mongoose": "^6.0.14",
     "node-fetch": "^2.6.7",
     "nodemon": "^2.0.15",

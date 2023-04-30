@@ -1,5 +1,7 @@
 import React, { useContext }  from 'react'
 import { CreatePostFormContext } from '../../pages/_app'
+import useUploadImg from '../../hooks/useUploadImg'
+
 //auth
 import { useSessionUser } from '../../auth/getSessionUser'
 
@@ -19,6 +21,7 @@ import { GET_POSTS, GET_USER } from '../../lib/Queries';
 import ImageUpload from './ImageUpload/ImageUpload'
 
 export default function Form() {
+    const { uploadImg, isUploading } = useUploadImg()
     const { createPostForm, setCreatePostForm } = useContext(CreatePostFormContext)
     const { data } = useSessionUser()
     const currentUser = data?.getCurrentUser
@@ -54,17 +57,18 @@ export default function Form() {
         setCreatePostForm({...createPostForm, img: [...createPostForm.img, ...imageList]})
     }
 
-    function handleOnsubmit(e) {
+    async function handleOnsubmit(e) {
         e.preventDefault()
         const imgFileArray = createPostForm.img.map(img => img.file)
+        const imgUrlArray = await Promise.all(imgFileArray.map(async file => await uploadImg(file)))
 
         if (createPostForm.id) {
-            editPost({variables: {img: imgFileArray, message: createPostForm.message, id: createPostForm.id}})
+            editPost({variables: {img: imgUrlArray, message: createPostForm.message, id: createPostForm.id}})
             return
         }
 
         addPost({
-            variables: {img: imgFileArray, message: createPostForm.message},
+            variables: {img: imgUrlArray, message: createPostForm.message},
             update: (cache, { data: { addPost } }) => {
                 const allPosts = cache.readQuery({ query: GET_POSTS })
                 const user = cache.readQuery({ query: GET_USER, variables: { username: currentUser?.username }})
@@ -90,7 +94,7 @@ export default function Form() {
             <FormContainer>
                 <FormCard onSubmit={handleOnsubmit}>
                     <FormHeader>
-                        {isLoading && (
+                        {(isLoading || isUploading) && (
                             <LinearProgressContainer>
                                 <LinearProgress color="primary" />
                             </LinearProgressContainer>

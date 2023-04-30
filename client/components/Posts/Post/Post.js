@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useUploadImg from '../../../hooks/useUploadImg'
 
 //styles and icons
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
@@ -22,6 +23,7 @@ import Comment from './Comment/Comment'
 import ImageUpload from '../../Form/ImageUpload/ImageUpload'
 
 export default function Post({ post, inPostDetail }) {
+    const { uploadImg, isUploading } = useUploadImg()
     const { data } = useQuery(GET_CURRENT_USER)
     const currentUser = data?.getCurrentUser
     const [getComments, { data: commentsData, loading: getCommentsLoading }] = useLazyQuery(GET_COMMENTS, { variables: { id: post?.id } })
@@ -46,16 +48,18 @@ export default function Post({ post, inPostDetail }) {
     const isCanSubmit = commentForm.commentMessage !== '' || commentForm.commentImg !== ''
     const openCommentSection = isOpenCommentSection || inPostDetail
 
-    function handleCommentSubmit(e) {
+    async function handleCommentSubmit(e) {
         e.preventDefault()
+        let commentImgUrl = ""
+        if (commentForm.commentImg.file) commentImgUrl = await uploadImg(commentForm.commentImg.file)
 
         if (commentForm.id) {
-            editComment({variables: {commentImg: commentForm.commentImg.file, commentMessage: commentForm.commentMessage, id: post.id, commentId: commentForm.id}})
+            editComment({variables: {commentImg: commentImgUrl, commentMessage: commentForm.commentMessage, id: post.id, commentId: commentForm.id}})
             setCommentForm({ commentMessage:'', commentImg: '' })
             return
         }
 
-        addComment({variables: {commentImg: commentForm.commentImg.file, commentMessage: commentForm.commentMessage, id: post.id}})
+        addComment({variables: {commentImg: commentImgUrl, commentMessage: commentForm.commentMessage, id: post.id}})
         setCommentForm({ commentMessage:'', commentImg: '' })
     }
 
