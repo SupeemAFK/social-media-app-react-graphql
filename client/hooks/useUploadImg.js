@@ -6,7 +6,7 @@ export default function useUploadImg() {
     async function uploadImg(file) {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', 'PRESER_NAME')
+        formData.append('upload_preset', 'PRESET_NAME')
         try {
             setIsUploading(true);
             const res = await fetch('CLOUNDINARY_ENDPOINT', { method: 'POST', body: formData })
