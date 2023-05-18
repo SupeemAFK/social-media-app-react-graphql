@@ -2,6 +2,9 @@ Demo: [https://youtu.be/GSmxo-bzPZE](https://youtu.be/GSmxo-bzPZE)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Note📢
+This app was created when I was newly to web development so maybe some dependencies are deprecated and some code may be not the best practice
+
 ## Getting Started
 
 First, run the development server:
